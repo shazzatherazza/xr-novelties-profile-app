@@ -3,6 +3,7 @@ var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 var session = require("express-session");
 var MongoStore = require("connect-mongo")(session);
+require("dotenv").config();
 var app = express();
 
 // mongodb connection
@@ -13,7 +14,7 @@ db.on("error", console.error.bind(console, "connection error:"));
 // use sessions for tracking logins
 app.use(
   session({
-    secret: "private key",
+    secret: process.env.PRIVATE_KEY,
     resave: true,
     saveUninitialized: false,
     store: new MongoStore({ mongooseConnection: db })
